@@ -1,3 +1,7 @@
+![C++20](https://img.shields.io/badge/C++-20-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
+![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)
+
 # bstk-root-patcher
 **Universal BlueStacks Root Exploit & Integrity Bypass**
 
