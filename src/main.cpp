@@ -118,6 +118,7 @@ void apply_signatures_from_map(vhd_mmap_scanner& scanner, const std::string& tar
         for (const auto& sig : sigs)
         {
             scanner.patch(sig);
+            std::cout << std::endl;
         }
     }
     else
@@ -172,7 +173,7 @@ int main()
         std::cout << std::format("[{}] {}: {}", i, id, display_name) << std::endl;
     }
 
-    std::cout << std::endl << "Choose instance: " << std::endl;
+    std::cout << std::endl << "Choose instance: ";
     ui.reset_color();
 
     int instance_choice = -1;
@@ -235,7 +236,7 @@ int main()
             return 1;
         }
 
-        logger::log_info("Starting {} process for {}...", action_str, selected_instance);
+        logger::log_info("Starting {} process for {}...\n", action_str, selected_instance);
 
         apply_signatures_from_map(scanner, vhd_sig_key);
 

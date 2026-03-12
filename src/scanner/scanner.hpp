@@ -35,6 +35,7 @@ public:
 private:
     HANDLE h_file = INVALID_HANDLE_VALUE;
     HANDLE h_map = INVALID_HANDLE_VALUE;
+    std::string file_path;
     uint8_t* p_data = nullptr;
     uint64_t file_size = 0;
 };

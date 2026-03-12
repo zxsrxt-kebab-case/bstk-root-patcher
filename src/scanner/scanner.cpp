@@ -27,7 +27,7 @@ signature::signature(const std::string& pattern_str, const std::vector<uint8_t>&
     }
 }
 
-vhd_mmap_scanner::vhd_mmap_scanner(const std::string& path)
+vhd_mmap_scanner::vhd_mmap_scanner(const std::string& path) : file_path(path)
 {
     h_file = CreateFileA(path.c_str(), GENERIC_READ | GENERIC_WRITE,
                          FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
@@ -103,21 +103,24 @@ bool vhd_mmap_scanner::patch(const signature& sig)
         if (i % (file_size / 200) == 0)
         {
             ui.set_cursor(0, base_pos.Y);
+            ui.clear_line(base_pos.Y);
             ui.draw_progress(static_cast<float>(i) / file_size);
         }
     }
 
-    if (!found_any)
-    {
-        logger::log_error("Signature not found in the file.");
-    } else
-    {
-        FlushViewOfFile(p_data, 0);
-    }
-
     ui.set_cursor(0, base_pos.Y);
+    ui.clear_line(base_pos.Y);
     ui.draw_progress(1.0f);
     std::cout << std::endl;
+
+    if (!found_any)
+    {
+        logger::log_error("Signature not found in the {}", file_path);
+    } else
+    {
+        logger::log_info("Successfully patched {}", file_path);
+        FlushViewOfFile(p_data, 0);
+    }
 
     return found_any;
 }
