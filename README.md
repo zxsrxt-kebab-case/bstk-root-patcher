@@ -7,24 +7,28 @@ Note on Originality: This project was first researched and developed by zxsrxt a
 
 # Writeup
 
-after bluestacks update > 5.22.130 developers closed ability to gain userspace-root via /system/xbin/bstk/su
-so i reversed su binary from /system/xbin/bstk/su
-i pulled it via adb firstly
-they added checks for uid and developer mode
-now it loads uid whitelist from array and checks for presence in it
+after bluestacks update > 5.22.130 developers closed ability to gain userspace-root via /system/xbin/bstk/su.
+i took su binary(/system/xbin/bstk/su),
+pulled it via adb and open in ida pro.
+they added 2much checks for uid, developer mode, crc32 
+and more. for now it loads uid whitelist from array and checks executor uid for presence it in list
 ``` char __fastcall uid_in_whitelist(int a1) ```
 
-also developer mode is some flag in host system that allows modifying android system directly
-so i need a way to patch it
-we cant upload directly to android because of /system mounted as ro(read-only)
-i generated 2 sigs and patched it(mov eax, 1; ret;) in Root.vhd in $(DataDir)/Pie64/
-so firstly i tried to write a ext4 filesystem parser via lwext4 lib
-but it cant parse it due to some android and bstk restrictions
+also developer mode is some flag in host system that allows modifying android system directly.
 
-so i wrote direct patcher and it works
-after few tests and an hour some bluestacks check enables and triggers a security shutdown
-since it appears after Android has fully loaded, i thought it was in HD-Player.exe, and i was right
-i reversed, and found this 
+so i need a way to patch it automatically.
+we cant upload directly to android because of /system mounted as ro(read-only)
+
+i generated 2 sigs and patched it(mov eax, 1; ret;) in Root.vhd in $(DataDir)/Pie64/.
+firstly i tried to write a ext4 filesystem parser via lwext4 lib,
+but it cant parse due to some android and bstk restrictions
+
+so i wrote direct file scanner+patcher and it works!!
+
+after few tests and +- an hour, bluestacks crc32 check was enabled and triggers a security shutdown
+
+since it appears after Android has fully loaded, i thought it was in HD-Player.exe, and i was right.
+i reversed .exe, and found this 
 ```
 QObject::tr(
       v21,
@@ -72,6 +76,7 @@ if ( (unsigned __int8)sub_1401BC2C0() )
 ```
 
 so i patched sub_1401BC2C0 to return true(mov al, 1; ret;)
+
 and... it works! i dont get this restriction now
 
 
