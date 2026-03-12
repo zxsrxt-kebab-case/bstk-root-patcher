@@ -9,6 +9,7 @@
 #include <string>
 
 #include "../log_utils/log_utils.hpp"
+#include "parsers/bstk_conf_parser.hpp"
 
 namespace fs = std::filesystem;
 
@@ -34,29 +35,20 @@ std::string fs_utils::get_bluestacks_data_dir(const std::string& key)
     return "";
 }
 
-std::string fs_utils::find_root_vhd()
+std::string fs_utils::find_root_vhd(const std::string& path, const std::string& instance)
 {
-    std::string data_dir = get_bluestacks_data_dir("DataDir");
+    auto vhd_path = fs::path(path) / "Engine" / instance / "Root.vhd";
 
-    if (data_dir.empty())
+    if (fs::exists(vhd_path))
     {
-        logger::log_error("can`t find root vhd data directory");
-        return "";
+        return vhd_path.string();
     }
 
-    //try severAL instances
-    std::vector<std::string> instances = {"Pie64", "Rvc64", "Nougat64", "Nougat32"};
-
-    for (const auto& instance : instances)
+    if (path.find("Engine") == std::string::npos)
     {
-        fs::path vhd_path = fs::path(data_dir) / instance / "Root.vhd";
-
-        logger::log_info("trying to find at {}", vhd_path.string());
-
+        vhd_path = fs::path(path) / "Engine" / instance / "Root.vhd";
         if (fs::exists(vhd_path))
-        {
             return vhd_path.string();
-        }
     }
 
     return "";

@@ -9,7 +9,10 @@ add_executable(bstk_root_patcher main.cpp manifest.rc
         log_utils/log_utils.hpp
         scanner/scanner.cpp
         scanner/scanner.hpp
-        log_utils/сonsole_ui.hpp)
+        log_utils/сonsole_ui.hpp
+        parsers/bstk_conf_parser.cpp
+        parsers/bstk_conf_parser.hpp
+)
 
 if(MINGW)
     target_link_options(bstk_root_patcher PRIVATE

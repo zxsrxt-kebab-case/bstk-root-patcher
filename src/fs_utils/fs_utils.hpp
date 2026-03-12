@@ -11,7 +11,7 @@ class fs_utils
 {
 public:
     static std::string get_bluestacks_data_dir(const std::string& key);
-    static std::string find_root_vhd();
+    static std::string find_root_vhd(const std::string& path, const std::string& instance);
     static std::string find_hd_player();
 };
 
