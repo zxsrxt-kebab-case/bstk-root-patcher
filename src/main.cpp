@@ -211,16 +211,16 @@ int main()
     int choice;
     std::cin >> choice;
     {
-        std::string action_str;
-        if (choice == 0) action_str = "patch";
-        else if (choice == 1) action_str = "unpatch";
-        else {
-            logger::log_error("Invalid choice.");
+        if (choice < 0 || choice > 1)
+        {
+            logger::log_error("Invalid choice. Please select 0 or 1.");
             return 1;
         }
 
-        const auto& vhd_sig_key = selected_instance + "_" + action_str;
-        const auto& hd_player_sig_key = "HD-Player.exe_" + action_str;
+        std::string action_str = choice == 0 ? "patch" : "unpatch";
+
+        const auto& vhd_sig_key = std::format("{}_{}", selected_instance, action_str);
+        const auto& hd_player_sig_key = std::format("HD-Player.exe_{}", action_str);
 
         vhd_mmap_scanner scanner(root_vhd_path);
         if (!scanner.is_ready())
