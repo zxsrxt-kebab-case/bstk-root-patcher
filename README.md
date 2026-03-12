@@ -9,7 +9,7 @@ Since BlueStacks version > 5.22.130, developers locked down `su` access by imple
 
 This C++ tool completely dismantles those protections. By scanning the raw `.vhd` disk images and patching the `isDeveloperMode` Hypercall wrapper, it grants universal root access to any app. Coupled with a memory patch for `HD-Player.exe` to silence the disk integrity checks, it provides a seamless, permanent root experience.
 
-### 🚀 Why it's better:
+### Why it's better:
 - **Write Once, Root Everywhere:** Uses a unified signature for `isDeveloperMode` that works identically across Android 9, 11, and 13.
 - **Dynamic Binary Support:** Successfully targets both statically linked `su` (1.2MB) and the new dynamically linked versions (40KB).
 - **Fully Automated:** No manual path selection. It reads your config, finds your engines, and does the dirty work in seconds.
