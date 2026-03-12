@@ -17,7 +17,9 @@ This C++ tool completely dismantles those protections. By scanning the raw `.vhd
 
 ---
 
-![ui_output](pics/work.png)
+<p align="center">
+  <img src="pics/work.png" alt="ui_output">
+</p>
 
 # Disclaimer
 Note on Originality: This project was first researched and developed by zxsrxt and shared in Telegram. If you see similar logic or identical signatures in other repositories, they are likely derived from decompiling my early builds. This repository contains the original source and the logic behind the discovery.
